@@ -8,17 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var switchPage: Bool = false
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            if switchPage {
+                SignUpView(switchPage: $switchPage)
+            } else {
+                LoginView(switchPage: $switchPage)
+            }
         }
-        .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    NavigationStack {
+        ContentView()
+    }
 }

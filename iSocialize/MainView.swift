@@ -27,7 +27,6 @@ struct MainView: View {
             }
             .buttonStyle(.borderedProminent)
             
-            
         }
         .onAppear {
             sessionService.handleRefresh(with: Auth.auth().currentUser!.uid)

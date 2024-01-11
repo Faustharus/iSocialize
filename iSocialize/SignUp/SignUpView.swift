@@ -11,11 +11,6 @@ struct SignUpView: View {
     
     @StateObject private var registerVM = SignUpViewModelImpl(service: SignUpServiceImpl())
     
-    @State private var fullName: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var confirmPassword: String = ""
-    
     @State private var onBoardingStatus: Int = 0
     
     @Binding var switchPage: Bool
@@ -43,7 +38,7 @@ struct SignUpView: View {
                 Spacer().frame(height: geo.size.height * 0.1)
                 
                 Button {
-                    // TODO: <# Tap Instruction Here #>
+                    // TODO: Nothing Here
                 } label: {
                     Text("Forgot Password ?")
                         .hidden()
@@ -62,7 +57,6 @@ struct SignUpView: View {
                                 .fill(.red)
                             VStack {
                                 Button {
-                                    // TODO: <# Tap Instruction Here #>
                                     onBoardingStatus -= 1
                                 } label: {
                                     Text("Back")
@@ -81,7 +75,6 @@ struct SignUpView: View {
                             .fill(.cyan)
                         VStack {
                             Button {
-                                // TODO: <# Tap Instruction Here #>
                                 if onBoardingStatus < 1 {
                                     onBoardingStatus += 1
                                 } else {
@@ -112,6 +105,7 @@ struct SignUpView: View {
                     }
                 }
             }
+            .ignoresSafeArea(.keyboard)
             .padding(.vertical)
             .navigationTitle("iSocialize")
         }

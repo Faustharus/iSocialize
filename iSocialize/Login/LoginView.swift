@@ -9,8 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @StateObject private var loginVM = LoginViewModelImpl(service: LoginServiceImpl())
     
     @Binding var switchPage: Bool
     
@@ -32,7 +31,7 @@ struct LoginView: View {
                 Spacer().frame(height: geo.size.height * 0.1)
                 
                 Button {
-                    // TODO: <# Tap Instruction Here #>
+                    // TODO: Forgot Password Button
                 } label: {
                     Text("Forgot Password ?")
                 }
@@ -47,7 +46,7 @@ struct LoginView: View {
                         .fill(.cyan)
                     VStack {
                         Button {
-                            // TODO: <# Tap Instruction Here #>
+                            loginVM.login()
                         } label: {
                             Text("Log In")
                                 .font(.system(size: 30, weight: .light, design: .rounded))
@@ -72,6 +71,7 @@ struct LoginView: View {
                 }
                 
             }
+            .ignoresSafeArea(.keyboard)
             .padding(.vertical)
             .navigationTitle("iSocialize")
         }
@@ -97,7 +97,7 @@ extension LoginView {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(lineWidth: 3)
                         VStack {
-                            TextField("Email", text: $email)
+                            TextField("Email", text: $loginVM.credentials.email)
                                 .padding(.leading)
                         }
                     }
@@ -114,7 +114,7 @@ extension LoginView {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(lineWidth: 3)
                         VStack {
-                            TextField("Password", text: $password)
+                            SecureField("Password", text: $loginVM.credentials.password)
                                 .padding(.leading)
                         }
                     }

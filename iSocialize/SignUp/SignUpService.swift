@@ -11,8 +11,8 @@ import Firebase
 
 enum SignUpKeys: String {
     case id
-    case email
     case fullName
+    case email
 }
 
 protocol SignUpService {
@@ -34,8 +34,8 @@ final class SignUpServiceImpl: SignUpService {
                             
                             db.collection("users").document(uid).setData([
                                 SignUpKeys.id.rawValue: uid,
-                                SignUpKeys.email.rawValue: details.email,
-                                SignUpKeys.fullName.rawValue: details.fullName
+                                SignUpKeys.fullName.rawValue: details.fullName,
+                                SignUpKeys.email.rawValue: details.email
                             ]) { error in
                                 if let error = error {
                                     promise(.failure(error))

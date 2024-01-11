@@ -11,6 +11,9 @@
 		9E8ABF2D2B4874E300711EE4 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABF2C2B4874E300711EE4 /* SessionService.swift */; };
 		9E8ABF2F2B48762700711EE4 /* SessionUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABF2E2B48762700711EE4 /* SessionUserDetails.swift */; };
 		9E8ABF312B48790300711EE4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABF302B48790300711EE4 /* MainView.swift */; };
+		9E98014E2B49BD78006DF373 /* LoginDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E98014D2B49BD78006DF373 /* LoginDetails.swift */; };
+		9E9801502B49BDB6006DF373 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E98014F2B49BDB6006DF373 /* LoginService.swift */; };
+		9E9801522B49BE6D006DF373 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9801512B49BE6D006DF373 /* LoginViewModel.swift */; };
 		9EAAC7482B44705300CED1DA /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAAC7472B44705300CED1DA /* LoginView.swift */; };
 		9EAAC74A2B44818800CED1DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9EAAC7492B44818800CED1DA /* GoogleService-Info.plist */; };
 		9EAAC74C2B44829700CED1DA /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAAC74B2B44829700CED1DA /* SignUpView.swift */; };
@@ -54,6 +57,9 @@
 		9E8ABF2C2B4874E300711EE4 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		9E8ABF2E2B48762700711EE4 /* SessionUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionUserDetails.swift; sourceTree = "<group>"; };
 		9E8ABF302B48790300711EE4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		9E98014D2B49BD78006DF373 /* LoginDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetails.swift; sourceTree = "<group>"; };
+		9E98014F2B49BDB6006DF373 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		9E9801512B49BE6D006DF373 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		9EAAC7472B44705300CED1DA /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		9EAAC7492B44818800CED1DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9EAAC74B2B44829700CED1DA /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -107,10 +113,10 @@
 		9E12D2012B48700E00685DE6 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				9EAAC74B2B44829700CED1DA /* SignUpView.swift */,
 				9EFAC2942B4856940094B5BD /* SignUpDetails.swift */,
 				9EFAC2962B48582F0094B5BD /* SignUpService.swift */,
 				9E12D1FF2B486D5300685DE6 /* SignUpViewModel.swift */,
-				9EAAC74B2B44829700CED1DA /* SignUpView.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -122,6 +128,17 @@
 				9E8ABF2E2B48762700711EE4 /* SessionUserDetails.swift */,
 			);
 			path = Session;
+			sourceTree = "<group>";
+		};
+		9E98014C2B49BBC1006DF373 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				9EAAC7472B44705300CED1DA /* LoginView.swift */,
+				9E98014D2B49BD78006DF373 /* LoginDetails.swift */,
+				9E98014F2B49BDB6006DF373 /* LoginService.swift */,
+				9E9801512B49BE6D006DF373 /* LoginViewModel.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		9EBBAA262B42D72C007C3F29 = {
@@ -146,9 +163,9 @@
 				9EBBAA322B42D72D007C3F29 /* iSocializeApp.swift */,
 				9EBBAA342B42D72D007C3F29 /* ContentView.swift */,
 				9E8ABF302B48790300711EE4 /* MainView.swift */,
-				9E8ABF2B2B4874D200711EE4 /* Session */,
+				9E98014C2B49BBC1006DF373 /* Login */,
 				9E12D2012B48700E00685DE6 /* SignUp */,
-				9EAAC7472B44705300CED1DA /* LoginView.swift */,
+				9E8ABF2B2B4874D200711EE4 /* Session */,
 				9EBBAA362B42D72D007C3F29 /* Assets.xcassets */,
 				9EAAC7492B44818800CED1DA /* GoogleService-Info.plist */,
 				9EBBAA382B42D72D007C3F29 /* Preview Content */,
@@ -268,11 +285,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EAAC74C2B44829700CED1DA /* SignUpView.swift in Sources */,
+				9E98014E2B49BD78006DF373 /* LoginDetails.swift in Sources */,
 				9EFAC2972B48582F0094B5BD /* SignUpService.swift in Sources */,
 				9EAAC7482B44705300CED1DA /* LoginView.swift in Sources */,
 				9E8ABF312B48790300711EE4 /* MainView.swift in Sources */,
 				9EFAC2952B4856940094B5BD /* SignUpDetails.swift in Sources */,
 				9E8ABF2D2B4874E300711EE4 /* SessionService.swift in Sources */,
+				9E9801502B49BDB6006DF373 /* LoginService.swift in Sources */,
+				9E9801522B49BE6D006DF373 /* LoginViewModel.swift in Sources */,
 				9E8ABF2F2B48762700711EE4 /* SessionUserDetails.swift in Sources */,
 				9EBBAA352B42D72D007C3F29 /* ContentView.swift in Sources */,
 				9EBBAA332B42D72D007C3F29 /* iSocializeApp.swift in Sources */,

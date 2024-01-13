@@ -16,65 +16,55 @@ struct LoginView: View {
     var body: some View {
         GeometryReader { geo in
             VStack {
-                Image(systemName: "bubble.left.and.bubble.right")
+                Image(systemName: "bubble.left.and.text.bubble.right")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: geo.size.width * 0.5)
+                    .frame(width: geo.size.width * 0.3)
                 Text("Where socializing feels rewarding")
-                    .font(.system(size: 18, weight: .light, design: .rounded))
-                    .italic()
+                    .font(.headline)
                 
-                Spacer().frame(height: geo.size.height * 0.1)
+                Spacer().frame(minHeight: 8, maxHeight: 16)
                 
-                emailAndPassword
-                
-                Spacer().frame(height: geo.size.height * 0.1)
-                
-                Button {
-                    // TODO: Forgot Password Button
-                } label: {
-                    Text("Forgot Password ?")
-                }
-                .offset(x: 85, y: 0.0)
-                .buttonStyle(.plain)
-                .foregroundStyle(.secondary)
-                
-                Spacer().frame(height: 50)
-                
-                ZStack {
-                    Capsule()
-                        .fill(.cyan)
-                    VStack {
-                        Button {
-                            loginVM.login()
-                        } label: {
-                            Text("Log In")
-                                .font(.system(size: 30, weight: .light, design: .rounded))
-                                .foregroundStyle(.white)
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Email")
+                        .font(.title2)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10.0)
+                            .stroke(.black, lineWidth: 2)
+                        VStack {
+                            TextField("Email", text: $loginVM.credentials.email)
+                                .submitLabel(.next)
+                                .padding(.horizontal, 5)
                         }
-                        .buttonStyle(.plain)
                     }
+                    .frame(minHeight: 35, maxHeight: 55)
                 }
-                .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.1)
-                .padding(.horizontal, 30)
+                .padding(.horizontal, 15)
                 
-                Spacer().frame(height: 30)
+                Spacer().frame(minHeight: 16, maxHeight: 32)
                 
-                HStack(spacing: 0) {
-                    Text("Don't have an account yet ? - ")
-                    
-                    Button {
-                        switchPage.toggle()
-                    } label: {
-                        Text("Join")
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Password")
+                        .font(.title2)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10.0)
+                            .stroke(.black, lineWidth: 2)
+                        VStack {
+                            SecureField("********", text: $loginVM.credentials.password)
+                                .submitLabel(.done)
+                                .padding(.horizontal, 5)
+                        }
                     }
+                    .frame(minHeight: 35, maxHeight: 55)
                 }
-                
+                .padding(.horizontal, 15)
             }
-            .ignoresSafeArea(.keyboard)
-            .padding(.vertical)
-            .navigationTitle("iSocialize")
+            .containerRelativeFrame(.horizontal) { width, size in
+                width
+            }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
+        .navigationTitle("iSocialize")
     }
 }
 
@@ -84,45 +74,3 @@ struct LoginView: View {
     }
 }
 
-extension LoginView {
-    
-    private var emailAndPassword: some View {
-        GeometryReader { geo in
-            VStack {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Email")
-                        .font(.title.bold())
-                        .padding(.leading, 5)
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 3)
-                        VStack {
-                            TextField("Email", text: $loginVM.credentials.email)
-                                .padding(.leading)
-                        }
-                    }
-                    .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
-                }
-                
-                Spacer().frame(height: geo.size.height * 0.15)
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Password")
-                        .font(.title.bold())
-                        .padding(.leading, 5)
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 3)
-                        VStack {
-                            SecureField("Password", text: $loginVM.credentials.password)
-                                .padding(.leading)
-                        }
-                    }
-                    .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
-                }
-            }
-            .padding(.horizontal, 40)
-        }
-    }
-    
-}

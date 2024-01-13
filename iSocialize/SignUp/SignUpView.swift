@@ -105,10 +105,10 @@ struct SignUpView: View {
                     }
                 }
             }
-            .ignoresSafeArea(.keyboard)
             .padding(.vertical)
             .navigationTitle("iSocialize")
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 
@@ -124,37 +124,44 @@ extension SignUpView {
     private var emailAndName: some View {
         GeometryReader { geo in
             VStack {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Email")
-                        .font(.title.bold())
-                        .padding(.leading, 5)
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 3)
-                        VStack {
-                            TextField("Email", text: $registerVM.userDetails.email)
-                                .padding(.leading)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Email")
+                            .font(.title.bold())
+                            .padding(.leading, 5)
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(lineWidth: 3)
+                            VStack {
+                                TextField("Email", text: $registerVM.userDetails.email)
+                                    .keyboardType(.emailAddress)
+                                    .submitLabel(.next)
+                                    .padding(.leading)
+                            }
                         }
+                        .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
                     }
-                    .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
-                }
-                
-                Spacer().frame(height: geo.size.height * 0.15)
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Full Name")
-                        .font(.title.bold())
-                        .padding(.leading, 5)
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 3)
-                        VStack {
-                            TextField("Full Name", text: $registerVM.userDetails.fullName)
-                                .padding(.leading)
+                    
+                    Spacer().frame(height: geo.size.height * 0.15)
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Full Name")
+                            .font(.title.bold())
+                            .padding(.leading, 5)
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(lineWidth: 3)
+                            VStack {
+                                TextField("Full Name", text: $registerVM.userDetails.fullName)
+                                    .keyboardType(.default)
+                                    .submitLabel(.done)
+                                    .padding(.leading)
+                            }
                         }
+                        .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
                     }
-                    .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
                 }
+                .frame(width: geo.frame(in: .local).size.width * 0.8, height: geo.frame(in: .local).size.height * 1.5)
             }
             .padding(.horizontal, 40)
         }
@@ -164,37 +171,44 @@ extension SignUpView {
     private var passwords: some View {
         GeometryReader { geo in
             VStack {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Password")
-                        .font(.title.bold())
-                        .padding(.leading, 5)
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 3)
-                        VStack {
-                            SecureField("Password", text: $registerVM.userDetails.password)
-                                .padding(.leading)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Password")
+                            .font(.title.bold())
+                            .padding(.leading, 5)
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(lineWidth: 3)
+                            VStack {
+                                SecureField("Password", text: $registerVM.userDetails.password)
+                                    .keyboardType(.default)
+                                    .submitLabel(.next)
+                                    .padding(.leading)
+                            }
                         }
+                        .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
                     }
-                    .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
-                }
-                
-                Spacer().frame(height: geo.size.height * 0.15)
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Confirm Password")
-                        .font(.title.bold())
-                        .padding(.leading, 5)
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 3)
-                        VStack {
-                            SecureField("Confirm Password", text: $registerVM.userDetails.confirmPassword)
-                                .padding(.leading)
+                    
+                    Spacer().frame(height: geo.size.height * 0.15)
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Confirm Password")
+                            .font(.title.bold())
+                            .padding(.leading, 5)
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(lineWidth: 3)
+                            VStack {
+                                SecureField("Confirm Password", text: $registerVM.userDetails.confirmPassword)
+                                    .keyboardType(.default)
+                                    .submitLabel(.done)
+                                    .padding(.leading)
+                            }
                         }
+                        .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
                     }
-                    .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
                 }
+                .frame(width: geo.frame(in: .local).size.width * 0.8, height: geo.frame(in: .local).size.height * 1.5)
             }
             .padding(.horizontal, 40)
         }

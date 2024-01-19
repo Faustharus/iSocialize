@@ -11,6 +11,8 @@ struct LoginView: View {
     
     @StateObject private var loginVM = LoginViewModelImpl(service: LoginServiceImpl())
     
+    @State private var toSeePassword: Bool = false
+    
     @Binding var switchPage: Bool
     
     var body: some View {
@@ -25,39 +27,38 @@ struct LoginView: View {
                 
                 Spacer().frame(minHeight: 8, maxHeight: 16)
                 
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Email")
-                        .font(.title2)
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10.0)
-                            .stroke(.black, lineWidth: 2)
-                        VStack {
-                            TextField("Email", text: $loginVM.credentials.email)
-                                .submitLabel(.next)
-                                .padding(.horizontal, 5)
-                        }
-                    }
-                    .frame(minHeight: 35, maxHeight: 55)
-                }
-                .padding(.horizontal, 15)
+                TextFieldViewCompo(stateProperty: $loginVM.credentials.email, textFieldTitle: "Email", textFieldPlaceholder: "Email")
                 
                 Spacer().frame(minHeight: 16, maxHeight: 32)
                 
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Password")
-                        .font(.title2)
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10.0)
-                            .stroke(.black, lineWidth: 2)
-                        VStack {
-                            SecureField("********", text: $loginVM.credentials.password)
-                                .submitLabel(.done)
-                                .padding(.horizontal, 5)
-                        }
-                    }
-                    .frame(minHeight: 35, maxHeight: 55)
+                SecureFieldViewCompo(stateProperty: $loginVM.credentials.password, toSeePassword: $toSeePassword, secureFieldTitle: "Password", secureFieldPlaceholder: "Password")
+                
+                Button {
+                    // TODO: Forgot Password
+                } label: {
+                    Text("Forgot Password ?")
+                        .foregroundStyle(.secondary)
                 }
-                .padding(.horizontal, 15)
+                .offset(x: geo.frame(in: .global).midX - 95)
+                .buttonStyle(.plain)
+                
+                Spacer().frame(height: geo.size.height * 0.05)
+                
+                ActionButtonViewCompo(buttonText: "LogIn", buttonColor: .cyan, buttonWidth: geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                    loginVM.login()
+                }
+                
+                Spacer()
+                
+                HStack(spacing: 0) {
+                    Text("Not yet an account ? - ")
+                    Button {
+                        switchPage.toggle()
+                    } label: {
+                        Text("SignUp")
+                    }
+                }
+                .padding(.vertical, 15)
             }
             .containerRelativeFrame(.horizontal) { width, size in
                 width

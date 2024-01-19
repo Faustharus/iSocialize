@@ -12,21 +12,22 @@ struct SignUpView: View {
     @StateObject private var registerVM = SignUpViewModelImpl(service: SignUpServiceImpl())
     
     @State private var onBoardingStatus: Int = 0
+    @State private var toSeePassword: Bool = false
+    @State private var toSeeConfirmPassword: Bool = false
     
     @Binding var switchPage: Bool
     
     var body: some View {
         GeometryReader { geo in
             VStack {
-                Image(systemName: "bubble.left.and.bubble.right")
+                Image(systemName: "bubble.left.and.text.bubble.right")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: geo.size.width * 0.5)
+                    .frame(width: geo.size.width * 0.3)
                 Text("Where socializing feels rewarding")
-                    .font(.system(size: 18, weight: .light, design: .rounded))
-                    .italic()
+                    .font(.headline)
                 
-                Spacer().frame(height: geo.size.height * 0.1)
+                Spacer().frame(minHeight: 8, maxHeight: 16)
                 
                 switch onBoardingStatus {
                 case 1:
@@ -35,80 +36,45 @@ struct SignUpView: View {
                     emailAndName
                 }
                 
-                Spacer().frame(height: geo.size.height * 0.1)
-                
-                Button {
-                    // TODO: Nothing Here
-                } label: {
-                    Text("Forgot Password ?")
-                        .hidden()
-                }
-                .offset(x: 85, y: 0.0)
-                .buttonStyle(.plain)
-                .foregroundStyle(.secondary)
-                .disabled(true)
-                
-                Spacer().frame(height: 50)
+                Spacer().frame(height: geo.size.height * 0.09)
                 
                 HStack {
                     if onBoardingStatus == 1 {
-                        ZStack {
-                            Capsule()
-                                .fill(.red)
-                            VStack {
-                                Button {
-                                    onBoardingStatus -= 1
-                                } label: {
-                                    Text("Back")
-                                        .font(.system(size: 30, weight: .light, design: .rounded))
-                                        .foregroundStyle(.white)
-                                }
-                                .buttonStyle(.plain)
-                            }
+                        ActionButtonViewCompo(buttonText: "Back", buttonColor: .red, buttonWidth: onBoardingStatus == 1 ? geo.size.width * 0.4 : geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                            onBoardingStatus -= 1
                         }
-                        .frame(width: onBoardingStatus == 1 ? geo.size.width * 0.4 : geo.size.width * 0.8, height: geo.size.height * 0.1)
                         .padding(.horizontal, onBoardingStatus == 1 ? 10 : 30)
                     }
                     
-                    ZStack {
-                        Capsule()
-                            .fill(.cyan)
-                        VStack {
-                            Button {
-                                if onBoardingStatus < 1 {
-                                    onBoardingStatus += 1
-                                } else {
-                                    onBoardingStatus = onBoardingStatus + 0
-                                    registerVM.register()
-                                }
-                            } label: {
-                                Text(onBoardingStatus == 1 ? "SignUp" : "Next")
-                                    .font(.system(size: 30, weight: .light, design: .rounded))
-                                    .foregroundStyle(.white)
-                            }
-                            .buttonStyle(.plain)
+                    ActionButtonViewCompo(buttonText: onBoardingStatus == 1 ? "SignUp" : "Next", buttonColor: .cyan, buttonWidth: onBoardingStatus == 1 ? geo.size.width * 0.4 : geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                        if onBoardingStatus < 1 {
+                            onBoardingStatus += 1
+                        } else {
+                            onBoardingStatus = onBoardingStatus + 0
+                            registerVM.register()
                         }
                     }
-                    .frame(width: onBoardingStatus == 1 ? geo.size.width * 0.4 : geo.size.width * 0.8, height: geo.size.height * 0.1)
                     .padding(.horizontal, onBoardingStatus == 1 ? 10 : 30)
                 }
                 
-                Spacer().frame(height: 30)
+                Spacer()
                 
                 HStack(spacing: 0) {
-                    Text("Have an account already ? - ")
-                    
+                    Text("Already have an account ? - ")
                     Button {
                         switchPage.toggle()
                     } label: {
-                        Text("Log")
+                        Text("LogIn")
                     }
                 }
+                .padding(.vertical, 15)
             }
-            .padding(.vertical)
-            .navigationTitle("iSocialize")
+            .containerRelativeFrame(.horizontal) { width, size in
+                width
+            }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .navigationTitle("iSocialize")
     }
 }
 
@@ -121,96 +87,19 @@ struct SignUpView: View {
 // MARK: View Components
 extension SignUpView {
     
-    private var emailAndName: some View {
-        GeometryReader { geo in
-            VStack {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Email")
-                            .font(.title.bold())
-                            .padding(.leading, 5)
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(lineWidth: 3)
-                            VStack {
-                                TextField("Email", text: $registerVM.userDetails.email)
-                                    .keyboardType(.emailAddress)
-                                    .submitLabel(.next)
-                                    .padding(.leading)
-                            }
-                        }
-                        .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
-                    }
-                    
-                    Spacer().frame(height: geo.size.height * 0.15)
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Full Name")
-                            .font(.title.bold())
-                            .padding(.leading, 5)
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(lineWidth: 3)
-                            VStack {
-                                TextField("Full Name", text: $registerVM.userDetails.fullName)
-                                    .keyboardType(.default)
-                                    .submitLabel(.done)
-                                    .padding(.leading)
-                            }
-                        }
-                        .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
-                    }
-                }
-                .frame(width: geo.frame(in: .local).size.width * 0.8, height: geo.frame(in: .local).size.height * 1.5)
-            }
-            .padding(.horizontal, 40)
+    private var passwords: some View {
+        VStack {
+            SecureFieldViewCompo(stateProperty: $registerVM.userDetails.password, toSeePassword: $toSeePassword, secureFieldTitle: "Password", secureFieldPlaceholder: "Password")
+            Spacer().frame(minHeight: 16, maxHeight: 32)
+            SecureFieldViewCompo(stateProperty: $registerVM.userDetails.confirmPassword, toSeePassword: $toSeeConfirmPassword, secureFieldTitle: "Confirm Password", secureFieldPlaceholder: "Confirm Password")
         }
     }
     
-    
-    private var passwords: some View {
-        GeometryReader { geo in
-            VStack {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Password")
-                            .font(.title.bold())
-                            .padding(.leading, 5)
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(lineWidth: 3)
-                            VStack {
-                                SecureField("Password", text: $registerVM.userDetails.password)
-                                    .keyboardType(.default)
-                                    .submitLabel(.next)
-                                    .padding(.leading)
-                            }
-                        }
-                        .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
-                    }
-                    
-                    Spacer().frame(height: geo.size.height * 0.15)
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Confirm Password")
-                            .font(.title.bold())
-                            .padding(.leading, 5)
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(lineWidth: 3)
-                            VStack {
-                                SecureField("Confirm Password", text: $registerVM.userDetails.confirmPassword)
-                                    .keyboardType(.default)
-                                    .submitLabel(.done)
-                                    .padding(.leading)
-                            }
-                        }
-                        .frame(width: geo.frame(in: .local).size.width * 0.8, height: 45)
-                    }
-                }
-                .frame(width: geo.frame(in: .local).size.width * 0.8, height: geo.frame(in: .local).size.height * 1.5)
-            }
-            .padding(.horizontal, 40)
+    private var emailAndName: some View {
+        VStack {
+            TextFieldViewCompo(stateProperty: $registerVM.userDetails.email, textFieldTitle: "Email", textFieldPlaceholder: "Email")
+            Spacer().frame(minHeight: 16, maxHeight: 32)
+            TextFieldViewCompo(stateProperty: $registerVM.userDetails.fullName, textFieldTitle: "Full Name", textFieldPlaceholder: "Full Name")
         }
     }
     

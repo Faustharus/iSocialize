@@ -12,6 +12,7 @@ struct LoginView: View {
     @StateObject private var loginVM = LoginViewModelImpl(service: LoginServiceImpl())
     
     @State private var toSeePassword: Bool = false
+    @State private var toForgotPassword: Bool = false
     
     @Binding var switchPage: Bool
     
@@ -34,7 +35,7 @@ struct LoginView: View {
                 SecureFieldViewCompo(stateProperty: $loginVM.credentials.password, toSeePassword: $toSeePassword, secureFieldTitle: "Password", secureFieldPlaceholder: "Password")
                 
                 Button {
-                    // TODO: Forgot Password
+                    toForgotPassword = true
                 } label: {
                     Text("Forgot Password ?")
                         .foregroundStyle(.secondary)
@@ -66,6 +67,9 @@ struct LoginView: View {
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         .navigationTitle("iSocialize")
+        .fullScreenCover(isPresented: $toForgotPassword) {
+            ForgotPasswordView()
+        }
     }
 }
 

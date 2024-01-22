@@ -35,7 +35,10 @@ struct ForgotPasswordView: View {
                 Spacer().frame(minHeight: 16, maxHeight: 32)
                 
                 ActionButtonViewCompo(buttonText: "Reset Password", buttonColor: .cyan, buttonWidth: geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
-                    forgotPwdVM.sendPasswordReset()
+                    raiseAlert = true
+                    if checkEmailFormat(newValue: forgotPwdVM.email) {
+                        forgotPwdVM.sendPasswordReset()
+                    }
                 }
                 .disabled(forgotPwdVM.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 
@@ -45,10 +48,35 @@ struct ForgotPasswordView: View {
                     dismiss()
                 }
             }
+            .alert(isPresented: $raiseAlert) {
+                if checkEmailFormat(newValue: forgotPwdVM.email) {
+                    return Alert(title: Text("Lost Password Request Sent"), message: Text("If you do have any account at \(forgotPwdVM.email), you should see the request in your MailBox - Check your Spam"), dismissButton: .default(Text("Resume")))
+                } else {
+                    return Alert(title: Text("Email Format Invalid"), message: Text("The format of your email is invalid"), dismissButton: .default(Text("OK")))
+                }
+            }
         }
     }
 }
 
 #Preview {
     ForgotPasswordView()
+}
+
+// MARK: Functions
+extension ForgotPasswordView {
+    
+    private func checkEmailFormat(newValue: String) -> Bool {
+        let emailRegex = try! Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9]{2,64}")
+        
+        do {
+            if newValue.contains(emailRegex) {
+                print("Valid Email Format")
+                return true
+            }
+        }
+        print("Email Format Invalid")
+        return false
+    }
+    
 }

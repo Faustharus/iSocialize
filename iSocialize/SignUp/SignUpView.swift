@@ -41,19 +41,25 @@ struct SignUpView: View {
                 HStack {
                     if onBoardingStatus == 1 {
                         ActionButtonViewCompo(buttonText: "Back", buttonColor: .red, buttonWidth: onBoardingStatus == 1 ? geo.size.width * 0.4 : geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
-                            onBoardingStatus -= 1
+                            withAnimation(.spring()) {
+                                onBoardingStatus -= 1
+                            }
                         }
                         .padding(.horizontal, onBoardingStatus == 1 ? 10 : 30)
                     }
                     
                     ActionButtonViewCompo(buttonText: onBoardingStatus == 1 ? "SignUp" : "Next", buttonColor: .cyan, buttonWidth: onBoardingStatus == 1 ? geo.size.width * 0.4 : geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
-                        if onBoardingStatus < 1 {
-                            onBoardingStatus += 1
-                        } else {
-                            onBoardingStatus = onBoardingStatus + 0
-                            registerVM.register()
+                        withAnimation(.spring()) {
+                            if onBoardingStatus == 1 {
+                                if checkEmailFormat(newValue: registerVM.userDetails.email) {
+                                    registerVM.register()
+                                }
+                            } else {
+                                onBoardingStatus += 1
+                            }
                         }
                     }
+                    .disabled(onBoardingStatus == 1 && canSignIn())
                     .padding(.horizontal, onBoardingStatus == 1 ? 10 : 30)
                 }
                 
@@ -101,6 +107,42 @@ extension SignUpView {
             Spacer().frame(minHeight: 16, maxHeight: 32)
             TextFieldViewCompo(stateProperty: $registerVM.userDetails.fullName, textFieldTitle: "Full Name", textFieldPlaceholder: "Full Name")
         }
+    }
+    
+}
+
+
+// MARK: Funtions
+extension SignUpView {
+    
+    private func checkEmailFormat(newValue: String) -> Bool {
+        let emailRegex = try! Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9]{2,64}")
+        
+        do {
+            if newValue.contains(emailRegex) {
+                print("Valid Email Format")
+                return true
+            }
+        }
+        print("Email Format Invalid")
+        return false
+    }
+    
+    private func checkPasswordValidity(newValue: String) -> Bool {
+        let pwdRegex = try! Regex("\\A(?=[^a-z]*[a-z])(?=[^0-9]*[0-9])[a-zA-Z0-9!@#$%^&*]{12,}\\z")
+        
+        do {
+            if newValue.contains(pwdRegex) {
+                print("Password Format Valid")
+                return true
+            }
+        }
+        print("Minimum of 12 characters required \nAt least, 1 Uppercase Letter, 1 Smallcase Letter, 1 Number and 1 Special Character")
+        return false
+    }
+    
+    private func canSignIn() -> Bool {
+        registerVM.userDetails.fullName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.confirmPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
 }

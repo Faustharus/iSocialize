@@ -13,20 +13,16 @@ struct MainView: View {
     @EnvironmentObject var sessionService: SessionServiceImpl
     
     var body: some View {
-        VStack {
-            Text("Welcome to iSocialize")
-                .font(.title)
+        TabView {
+            TalkView()
+                .tabItem {
+                    Label("Discussions", systemImage: "captions.bubble")
+                }
             
-            Spacer().frame(height: 50)
-            
-            Text("\(sessionService.userDetails.fullName)'s Profile")
-                .font(.headline)
-            
-            Button("Logout", role: .destructive) {
-                sessionService.logout()
-            }
-            .buttonStyle(.borderedProminent)
-            
+            ProfileView()
+                .tabItem {
+                    Label("Profile", systemImage: "person")
+                }
         }
         .onAppear {
             sessionService.handleRefresh(with: Auth.auth().currentUser!.uid)
@@ -34,7 +30,7 @@ struct MainView: View {
     }
 }
 
-#Preview {
-    MainView()
-        .environmentObject(SessionServiceImpl())
-}
+//#Preview {
+//    MainView()
+//        .environmentObject(SessionServiceImpl())
+//}

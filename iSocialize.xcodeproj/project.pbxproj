@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9E12D2002B486D5300685DE6 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E12D1FF2B486D5300685DE6 /* SignUpViewModel.swift */; };
+		9E1D434E2B5EA65E00108034 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D434D2B5EA65E00108034 /* ProfileView.swift */; };
+		9E1D43502B5EAA5000108034 /* TalkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D434F2B5EAA5000108034 /* TalkView.swift */; };
 		9E2DAFB22B5C271A0051DC8A /* ForgotPasswordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2DAFB12B5C271A0051DC8A /* ForgotPasswordService.swift */; };
 		9E2DAFB62B5C281C0051DC8A /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2DAFB52B5C281C0051DC8A /* ForgotPasswordViewModel.swift */; };
 		9E2DAFB82B5C292E0051DC8A /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2DAFB72B5C292E0051DC8A /* ForgotPasswordView.swift */; };
@@ -60,6 +62,8 @@
 
 /* Begin PBXFileReference section */
 		9E12D1FF2B486D5300685DE6 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		9E1D434D2B5EA65E00108034 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		9E1D434F2B5EAA5000108034 /* TalkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkView.swift; sourceTree = "<group>"; };
 		9E2DAFB12B5C271A0051DC8A /* ForgotPasswordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordService.swift; sourceTree = "<group>"; };
 		9E2DAFB52B5C281C0051DC8A /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		9E2DAFB72B5C292E0051DC8A /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				9EBBAA322B42D72D007C3F29 /* iSocializeApp.swift */,
 				9EBBAA342B42D72D007C3F29 /* ContentView.swift */,
 				9E8ABF302B48790300711EE4 /* MainView.swift */,
+				9E1D434D2B5EA65E00108034 /* ProfileView.swift */,
+				9E1D434F2B5EAA5000108034 /* TalkView.swift */,
 				9E8A27BC2B5A858500407EA7 /* Components */,
 				9E98014C2B49BBC1006DF373 /* Login */,
 				9E12D2012B48700E00685DE6 /* SignUp */,
@@ -330,7 +336,9 @@
 				9E9801502B49BDB6006DF373 /* LoginService.swift in Sources */,
 				9EEE1C9C2B5AFAFC00464C8B /* ActionButtonViewCompo.swift in Sources */,
 				9E9801522B49BE6D006DF373 /* LoginViewModel.swift in Sources */,
+				9E1D434E2B5EA65E00108034 /* ProfileView.swift in Sources */,
 				9E8ABF2F2B48762700711EE4 /* SessionUserDetails.swift in Sources */,
+				9E1D43502B5EAA5000108034 /* TalkView.swift in Sources */,
 				9EBBAA352B42D72D007C3F29 /* ContentView.swift in Sources */,
 				9E2DAFB22B5C271A0051DC8A /* ForgotPasswordService.swift in Sources */,
 				9E2DAFB82B5C292E0051DC8A /* ForgotPasswordView.swift in Sources */,

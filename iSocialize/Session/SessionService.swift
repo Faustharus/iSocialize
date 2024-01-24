@@ -66,15 +66,17 @@ extension SessionServiceImpl {
             if let document = document, document.exists {
                 let data = document.data()
                 if let data = data {
-                    print("")
                     self.userDetails.id = data["id"] as? String ?? "N/A"
                     self.userDetails.fullName = data["fullName"] as? String ?? "N/A"
                     self.userDetails.email = data["email"] as? String ?? "N/A"
+                    self.userDetails.nickname = data["nickname"] as? String ?? "N/A"
+                    self.userDetails.completeTagName = data["completeTagName"] as? String ?? ""
+                    self.userDetails.profilePicture = data["profilePicture"] as? String ?? "N/A"
                 }
             }
             
             DispatchQueue.main.async {
-                self.userDetails = SessionUserDetails(id: self.userDetails.id, fullName: self.userDetails.fullName, email: self.userDetails.email)
+                self.userDetails = SessionUserDetails(id: self.userDetails.id, fullName: self.userDetails.fullName, email: self.userDetails.email, nickname: self.userDetails.nickname ?? "", completeTagName: self.userDetails.completeTagName ?? "", profilePicture: self.userDetails.profilePicture ?? "")
             }
         }
     }

@@ -8,29 +8,40 @@
 import FirebaseAuth
 import SwiftUI
 
+enum PageSelected: String, Identifiable {
+    case talk, profile
+    
+    var id: Int {
+        hashValue
+    }
+}
+
 struct MainView: View {
     
     @EnvironmentObject var sessionService: SessionServiceImpl
     
     var body: some View {
         TabView {
-            TalkView()
-                .tabItem {
-                    Label("Discussions", systemImage: "captions.bubble")
-                }
+            NavigationStack {
+                TalkView()
+            }
+            .tabItem {
+                Label("Discussions", systemImage: "captions.bubble")
+            }
+            .tag(PageSelected.talk)
             
-            ProfileView()
-                .tabItem {
-                    Label("Profile", systemImage: "person")
-                }
-        }
-        .onAppear {
-            sessionService.handleRefresh(with: Auth.auth().currentUser!.uid)
+            NavigationStack {
+                ProfileView()
+            }
+            .tabItem {
+                Label("Profile", systemImage: "person")
+            }
+            .tag(PageSelected.profile)
         }
     }
 }
 
-//#Preview {
-//    MainView()
-//        .environmentObject(SessionServiceImpl())
-//}
+#Preview {
+    MainView()
+        .environmentObject(SessionServiceImpl())
+}

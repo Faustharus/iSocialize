@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+enum FocusedLogin: Hashable {
+    case email, password
+}
+
 struct LoginView: View {
     
     @StateObject private var loginVM = LoginViewModelImpl(service: LoginServiceImpl())
@@ -15,6 +19,8 @@ struct LoginView: View {
     @State private var toForgotPassword: Bool = false
     
     @Binding var switchPage: Bool
+    
+    @FocusState var focusedLogin: FocusedLogin?
     
     var body: some View {
         GeometryReader { geo in
@@ -31,9 +37,10 @@ struct LoginView: View {
                 TextFieldViewCompo(stateProperty: $loginVM.credentials.email, textFieldTitle: "Email", textFieldPlaceholder: "Email")
                     .keyboardType(.emailAddress)
                     .autocorrectionDisabled()
+                    .focused($focusedLogin, equals: .email)
                     .toolbar {
                         ToolbarItemGroup(placement: .keyboard) {
-                            if !loginVM.credentials.email.isEmpty {
+                            if focusedLogin == .email {
                                 Button {
                                     self.loginVM.credentials.email = ""
                                 } label: {
@@ -47,6 +54,18 @@ struct LoginView: View {
                 
                 SecureFieldViewCompo(stateProperty: $loginVM.credentials.password, toSeePassword: $toSeePassword, secureFieldTitle: "Password", secureFieldPlaceholder: "Password")
                     .autocorrectionDisabled()
+                    .focused($focusedLogin, equals: .password)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            if focusedLogin == .password {
+                                Button {
+                                    self.loginVM.credentials.password = ""
+                                } label: {
+                                    Text("Reset")
+                                }
+                            }
+                        }
+                    }
                 
                 Button {
                     toForgotPassword = true
@@ -60,11 +79,12 @@ struct LoginView: View {
                 Spacer().frame(height: geo.size.height * 0.05)
                 
                 ActionButtonViewCompo(buttonText: "LogIn", buttonColor: .cyan, buttonWidth: geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
-                    if checkEmailFormat(newValue: loginVM.credentials.email) {
+                    if loginVM.checkEmailFormat(newValue: loginVM.credentials.email) {
                         loginVM.login()
                     }
                 }
-                .disabled(loginVM.credentials.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || loginVM.credentials.password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .shadow(color: .black, radius: 1, x: -0.5, y: -1)
+                .disabled(canLogin())
                 
                 Spacer()
                 
@@ -87,13 +107,13 @@ struct LoginView: View {
         .fullScreenCover(isPresented: $toForgotPassword) {
             ForgotPasswordView()
         }
-        .alert(isPresented: $loginVM.hasError) {
+        .alert(isPresented: $loginVM.hasError, content: {
             if case .failed(let error) = loginVM.state {
                 return Alert(title: Text("Your credentials aren't correct"), message: Text("\(error.localizedDescription)"))
             } else {
                 return Alert(title: Text("Error"), message: Text("Something went wrong"))
             }
-        }
+        })
     }
 }
 
@@ -106,17 +126,8 @@ struct LoginView: View {
 // MARK: Functions
 extension LoginView {
     
-    private func checkEmailFormat(newValue: String) -> Bool {
-        let emailRegex = try! Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9]{2,64}")
-        
-        do {
-            if newValue.contains(emailRegex) {
-                print("Valid Email Format")
-                return true
-            }
-        }
-        print("Email Format Invalid")
-        return false
+    private func canLogin() -> Bool {
+        loginVM.credentials.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || loginVM.credentials.password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
 }

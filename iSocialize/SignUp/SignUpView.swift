@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+enum FocusedSignUp: Hashable {
+    case fullname, email, password, confirmPassword
+}
+
 struct SignUpView: View {
     
     @StateObject private var registerVM = SignUpViewModelImpl(service: SignUpServiceImpl())
@@ -16,6 +20,8 @@ struct SignUpView: View {
     @State private var toSeeConfirmPassword: Bool = false
     
     @Binding var switchPage: Bool
+    
+    @FocusState var focusedSignUp: FocusedSignUp?
     
     var body: some View {
         GeometryReader { geo in
@@ -45,6 +51,7 @@ struct SignUpView: View {
                                 onBoardingStatus -= 1
                             }
                         }
+                        .shadow(color: .black, radius: 1, x: -0.5, y: -1)
                         .padding(.horizontal, onBoardingStatus == 1 ? 10 : 30)
                     }
                     
@@ -59,6 +66,7 @@ struct SignUpView: View {
                             }
                         }
                     }
+                    .shadow(color: .black, radius: 1, x: -0.5, y: -1)
                     .disabled(onBoardingStatus == 1 && canSignIn())
                     .padding(.horizontal, onBoardingStatus == 1 ? 10 : 30)
                 }
@@ -96,16 +104,76 @@ extension SignUpView {
     private var passwords: some View {
         VStack {
             SecureFieldViewCompo(stateProperty: $registerVM.userDetails.password, toSeePassword: $toSeePassword, secureFieldTitle: "Password", secureFieldPlaceholder: "Password")
+                .keyboardType(.default)
+                .autocorrectionDisabled()
+                .focused($focusedSignUp, equals: .password)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        if focusedSignUp == .password {
+                            Button {
+                                self.registerVM.userDetails.password = ""
+                            } label: {
+                                Text("Reset")
+                            }
+                        }
+                    }
+                }
+            
             Spacer().frame(minHeight: 16, maxHeight: 32)
+            
             SecureFieldViewCompo(stateProperty: $registerVM.userDetails.confirmPassword, toSeePassword: $toSeeConfirmPassword, secureFieldTitle: "Confirm Password", secureFieldPlaceholder: "Confirm Password")
+                .keyboardType(.default)
+                .autocorrectionDisabled()
+                .focused($focusedSignUp, equals: .confirmPassword)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        if focusedSignUp == .confirmPassword {
+                            Button {
+                                self.registerVM.userDetails.confirmPassword = ""
+                            } label: {
+                                Text("Reset")
+                            }
+                        }
+                    }
+                }
         }
     }
     
     private var emailAndName: some View {
         VStack {
             TextFieldViewCompo(stateProperty: $registerVM.userDetails.email, textFieldTitle: "Email", textFieldPlaceholder: "Email")
+                .keyboardType(.default)
+                .autocorrectionDisabled()
+                .focused($focusedSignUp, equals: .email)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        if focusedSignUp == .email {
+                            Button {
+                                self.registerVM.userDetails.email = ""
+                            } label: {
+                                Text("Reset")
+                            }
+                        }
+                    }
+                }
+            
             Spacer().frame(minHeight: 16, maxHeight: 32)
+            
             TextFieldViewCompo(stateProperty: $registerVM.userDetails.fullName, textFieldTitle: "Full Name", textFieldPlaceholder: "Full Name")
+                .keyboardType(.default)
+                .autocorrectionDisabled()
+                .focused($focusedSignUp, equals: .fullname)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        if focusedSignUp == .fullname {
+                            Button {
+                                self.registerVM.userDetails.fullName = ""
+                            } label: {
+                                Text("Reset")
+                            }
+                        }
+                    }
+                }
         }
     }
     

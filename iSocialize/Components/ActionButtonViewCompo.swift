@@ -28,7 +28,7 @@ struct ActionButtonViewCompo: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 50)
-                .fill(buttonColor)
+                .fill(buttonColor.gradient)
             VStack {
                 Button(action: handler) {
                     Text(buttonText)
@@ -43,5 +43,5 @@ struct ActionButtonViewCompo: View {
 }
 
 #Preview {
-    ActionButtonViewCompo(buttonText: "LogIn", buttonColor: .blue, buttonWidth: 150, buttonHeight: 65) { }
+    ActionButtonViewCompo(buttonText: "LogIn", buttonColor: .cyan, buttonWidth: 150, buttonHeight: 65) { }
 }

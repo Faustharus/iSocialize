@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E0E6CE62B6021CA005BC831 /* ChevronActionButtonCompo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E6CE52B6021CA005BC831 /* ChevronActionButtonCompo.swift */; };
 		9E12D2002B486D5300685DE6 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E12D1FF2B486D5300685DE6 /* SignUpViewModel.swift */; };
 		9E1D434E2B5EA65E00108034 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D434D2B5EA65E00108034 /* ProfileView.swift */; };
 		9E1D43502B5EAA5000108034 /* TalkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D434F2B5EAA5000108034 /* TalkView.swift */; };
@@ -61,6 +62,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9E0E6CE52B6021CA005BC831 /* ChevronActionButtonCompo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChevronActionButtonCompo.swift; sourceTree = "<group>"; };
+		9E0E6CE72B602CD9005BC831 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9E12D1FF2B486D5300685DE6 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		9E1D434D2B5EA65E00108034 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		9E1D434F2B5EAA5000108034 /* TalkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkView.swift; sourceTree = "<group>"; };
@@ -153,6 +156,7 @@
 				9E8A27BA2B5A857C00407EA7 /* TextFieldViewCompo.swift */,
 				9EC01E862B5AEDDF00E580A9 /* SecureFieldViewCompo.swift */,
 				9EEE1C9B2B5AFAFC00464C8B /* ActionButtonViewCompo.swift */,
+				9E0E6CE52B6021CA005BC831 /* ChevronActionButtonCompo.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -196,6 +200,7 @@
 		9EBBAA312B42D72D007C3F29 /* iSocialize */ = {
 			isa = PBXGroup;
 			children = (
+				9E0E6CE72B602CD9005BC831 /* Info.plist */,
 				9EBBAA322B42D72D007C3F29 /* iSocializeApp.swift */,
 				9EBBAA342B42D72D007C3F29 /* ContentView.swift */,
 				9E8ABF302B48790300711EE4 /* MainView.swift */,
@@ -332,6 +337,7 @@
 				9EFAC2952B4856940094B5BD /* SignUpDetails.swift in Sources */,
 				9E2DAFB62B5C281C0051DC8A /* ForgotPasswordViewModel.swift in Sources */,
 				9E8ABF2D2B4874E300711EE4 /* SessionService.swift in Sources */,
+				9E0E6CE62B6021CA005BC831 /* ChevronActionButtonCompo.swift in Sources */,
 				9EC01E872B5AEDDF00E580A9 /* SecureFieldViewCompo.swift in Sources */,
 				9E9801502B49BDB6006DF373 /* LoginService.swift in Sources */,
 				9EEE1C9C2B5AFAFC00464C8B /* ActionButtonViewCompo.swift in Sources */,
@@ -481,6 +487,7 @@
 				DEVELOPMENT_TEAM = 3D4DRXPTLN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iSocialize/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -514,6 +521,7 @@
 				DEVELOPMENT_TEAM = 3D4DRXPTLN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iSocialize/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

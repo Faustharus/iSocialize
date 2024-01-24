@@ -5,15 +5,15 @@
 	<key>API_KEY</key>
 	<string>YOUR_API_KEY_HERE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>GCM_ID_HERE</string>
+	<string>466020333259</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>BUNDLE_ID_HERE</string>
+	<string>com.chailloleaudamien.iSocialize</string>
 	<key>PROJECT_ID</key>
-	<string>PROJECT_ID_HERE</string>
+	<string>isocialize-62b10</string>
 	<key>STORAGE_BUCKET</key>
-	<string>STORAGE_BUCKET_HERE</string>
+	<string>isocialize-62b10.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>

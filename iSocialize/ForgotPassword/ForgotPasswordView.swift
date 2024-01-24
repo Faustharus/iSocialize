@@ -31,6 +31,9 @@ struct ForgotPasswordView: View {
                 Spacer().frame(minHeight: 8, maxHeight: 16)
                 
                 TextFieldViewCompo(stateProperty: $forgotPwdVM.email, textFieldTitle: "Email", textFieldPlaceholder: "Email")
+                    .keyboardType(.default)
+                    .autocorrectionDisabled()
+                    .submitLabel(.continue)
                 
                 Spacer().frame(minHeight: 16, maxHeight: 32)
                 
@@ -40,6 +43,7 @@ struct ForgotPasswordView: View {
                         forgotPwdVM.sendPasswordReset()
                     }
                 }
+                .shadow(color: .black, radius: 1, x: -0.5, y: -1)
                 .disabled(forgotPwdVM.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 
                 Spacer().frame(minHeight: 16, maxHeight: 32)
@@ -47,6 +51,7 @@ struct ForgotPasswordView: View {
                 ActionButtonViewCompo(buttonText: "Back", buttonColor: .red, buttonWidth: geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
                     dismiss()
                 }
+                .shadow(color: .black, radius: 1, x: -0.5, y: -1)
             }
             .alert(isPresented: $raiseAlert) {
                 if checkEmailFormat(newValue: forgotPwdVM.email) {

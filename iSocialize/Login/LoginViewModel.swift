@@ -28,7 +28,6 @@ final class LoginViewModelImpl: ObservableObject, LoginViewModel {
     @Published var state: LoginState = .na
     @Published var credentials: LoginDetails = .new
     @Published var hasError: Bool = false
-    @Published var isEmailFormatValid: Bool = false
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -52,19 +51,6 @@ final class LoginViewModelImpl: ObservableObject, LoginViewModel {
                 self?.state = .successfull
             }
             .store(in: &subscriptions)
-    }
-    
-    func checkEmailFormat(newValue: String) -> Bool {
-        let emailRegex = try! Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9]{2,64}")
-        
-        do {
-            if newValue.contains(emailRegex) {
-                print("Valid Email Format")
-                return isEmailFormatValid == true
-            }
-        }
-        print("Email Format Invalid")
-        return isEmailFormatValid == false
     }
 
 }

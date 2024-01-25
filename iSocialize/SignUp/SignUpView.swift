@@ -18,6 +18,8 @@ struct SignUpView: View {
     @State private var onBoardingStatus: Int = 0
     @State private var toSeePassword: Bool = false
     @State private var toSeeConfirmPassword: Bool = false
+    @State private var animationsNext: Bool = false
+    @State private var animationsBack: Bool = false
     
     @Binding var switchPage: Bool
     
@@ -46,7 +48,8 @@ struct SignUpView: View {
                 
                 HStack {
                     if onBoardingStatus == 1 {
-                        ActionButtonViewCompo(buttonText: "Back", buttonColor: .red, buttonWidth: onBoardingStatus == 1 ? geo.size.width * 0.4 : geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                        ActionButtonViewCompo(animated: $animationsBack, buttonText: "Back", buttonColor: .red, buttonWidth: onBoardingStatus == 1 ? geo.size.width * 0.4 : geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                            animationButton(_animationsBack)
                             withAnimation(.spring()) {
                                 onBoardingStatus -= 1
                             }
@@ -55,7 +58,8 @@ struct SignUpView: View {
                         .padding(.horizontal, onBoardingStatus == 1 ? 10 : 30)
                     }
                     
-                    ActionButtonViewCompo(buttonText: onBoardingStatus == 1 ? "SignUp" : "Next", buttonColor: .cyan, buttonWidth: onBoardingStatus == 1 ? geo.size.width * 0.4 : geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                    ActionButtonViewCompo(animated: $animationsNext, buttonText: onBoardingStatus == 1 ? "SignUp" : "Next", buttonColor: .cyan, buttonWidth: onBoardingStatus == 1 ? geo.size.width * 0.4 : geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                        animationButton(_animationsNext)
                         withAnimation(.spring()) {
                             if onBoardingStatus == 1 {
                                 if checkEmailFormat(newValue: registerVM.userDetails.email) {
@@ -212,5 +216,16 @@ extension SignUpView {
     private func canSignIn() -> Bool {
         registerVM.userDetails.fullName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.confirmPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
+    
+    private func animationButton(_ boolean: State<Bool>) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                withAnimation {
+                    boolean.wrappedValue = false
+                }
+            }
+            withAnimation {
+                boolean.wrappedValue = true
+            }
+        }
     
 }

@@ -17,6 +17,7 @@ struct LoginView: View {
     
     @State private var toSeePassword: Bool = false
     @State private var toForgotPassword: Bool = false
+    @State private var animations: Bool = false
     
     @Binding var switchPage: Bool
     
@@ -78,8 +79,9 @@ struct LoginView: View {
                 
                 Spacer().frame(height: geo.size.height * 0.05)
                 
-                ActionButtonViewCompo(buttonText: "LogIn", buttonColor: .cyan, buttonWidth: geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
-                    if loginVM.checkEmailFormat(newValue: loginVM.credentials.email) {
+                ActionButtonViewCompo(animated: $animations, buttonText: "LogIn", buttonColor: .cyan, buttonWidth: geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                    animationButton(_animations)
+                    if checkEmailFormat(newValue: loginVM.credentials.email) {
                         loginVM.login()
                     }
                 }
@@ -128,6 +130,30 @@ extension LoginView {
     
     private func canLogin() -> Bool {
         loginVM.credentials.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || loginVM.credentials.password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
+    private func animationButton(_ boolean: State<Bool>) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            withAnimation {
+                boolean.wrappedValue = false
+            }
+        }
+        withAnimation {
+            boolean.wrappedValue = true
+        }
+    }
+    
+    private func checkEmailFormat(newValue: String) -> Bool {
+        let emailRegex = try! Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9]{2,64}")
+        
+        do {
+            if newValue.contains(emailRegex) {
+                print("Valid Email Format")
+                return true
+            }
+        }
+        print("Email Format Invalid")
+        return false
     }
     
 }

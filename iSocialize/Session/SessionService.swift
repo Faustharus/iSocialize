@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import Firebase
+import FirebaseStorage
 
 enum SessionState {
     case loggedIn
@@ -37,6 +38,46 @@ final class SessionServiceImpl: ObservableObject, SessionService {
     
     func logout() {
         try? Auth.auth().signOut()
+    }
+    
+    func updateProfilePicture(with uid: String, with details: SessionUserDetails) {
+        guard let imageSelected = details.picture else {
+            return
+        }
+        
+        guard let imageData = imageSelected.jpegData(compressionQuality: 0.2) else {
+            return
+        }
+        
+        let storageRef = Storage.storage().reference(forURL: "FIREBASE_STORAGE_URL_HERE")
+        let storageProfileRef = storageRef.child("profile").child("\(uid)")
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        storageProfileRef.putData(imageData, metadata: metadata, completion: {
+            (storageMetadata, error) in
+            if error != nil {
+                print("\(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            storageProfileRef.downloadURL { [weak self] (url, error) in
+                if let metaImageURL = url?.absoluteString {
+                    self!.userDetails.profilePicture = metaImageURL
+                    let profileRef = self!.db.collection("users").document("\(uid)")
+                    profileRef.updateData([
+                        "profilePicture": metaImageURL
+                    ]) { error in
+                        if let error = error {
+                            print("Error updating profile picture: \(error.localizedDescription)")
+                        } else {
+                            print("Picture successfully updated")
+                        }
+                    }
+                }
+            }
+        })
     }
     
 }

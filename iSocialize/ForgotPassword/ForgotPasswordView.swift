@@ -15,6 +15,8 @@ struct ForgotPasswordView: View {
     
     @State private var tapButton: Bool = false
     @State private var tapBackButton: Bool = false
+    @State private var animationsPwd: Bool = false
+    @State private var animationsBack: Bool = false
     
     @State private var raiseAlert: Bool = false
     
@@ -37,18 +39,20 @@ struct ForgotPasswordView: View {
                 
                 Spacer().frame(minHeight: 16, maxHeight: 32)
                 
-                ActionButtonViewCompo(buttonText: "Reset Password", buttonColor: .cyan, buttonWidth: geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                ActionButtonViewCompo(animated: $animationsPwd, buttonText: "Reset Password", buttonColor: .cyan, buttonWidth: geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
                     raiseAlert = true
-                    if checkEmailFormat(newValue: forgotPwdVM.email) {
-                        forgotPwdVM.sendPasswordReset()
-                    }
+                    animationButton(_animationsPwd)
+//                    if checkEmailFormat(newValue: forgotPwdVM.email) {
+//                        forgotPwdVM.sendPasswordReset()
+//                    }
                 }
                 .shadow(color: .black, radius: 1, x: -0.5, y: -1)
-                .disabled(forgotPwdVM.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+//                .disabled(forgotPwdVM.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 
                 Spacer().frame(minHeight: 16, maxHeight: 32)
                 
-                ActionButtonViewCompo(buttonText: "Back", buttonColor: .red, buttonWidth: geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                ActionButtonViewCompo(animated: $animationsBack, buttonText: "Back", buttonColor: .red, buttonWidth: geo.size.width * 0.8, buttonHeight: geo.size.height * 0.1) {
+                    animationButton(_animationsBack)
                     dismiss()
                 }
                 .shadow(color: .black, radius: 1, x: -0.5, y: -1)
@@ -83,5 +87,16 @@ extension ForgotPasswordView {
         print("Email Format Invalid")
         return false
     }
+    
+    private func animationButton(_ boolean: State<Bool>) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                withAnimation {
+                    boolean.wrappedValue = false
+                }
+            }
+            withAnimation {
+                boolean.wrappedValue = true
+            }
+        }
     
 }

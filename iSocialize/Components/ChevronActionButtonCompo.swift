@@ -11,6 +11,8 @@ struct ChevronActionButtonCompo: View {
     
     typealias ActionHandler = () -> Void
     
+    @Binding var animated: Bool
+    
     let buttonTitle: String
     let buttonSubtitle: String
     let sfSymbols: String
@@ -19,7 +21,8 @@ struct ChevronActionButtonCompo: View {
     let buttonHeight: CGFloat
     let handler: ActionHandler
     
-    init(buttonTitle: String, buttonSubtitle: String, sfSymbols: String, buttonColor: Color, buttonWidth: CGFloat, buttonHeight: CGFloat, handler: @escaping ChevronActionButtonCompo.ActionHandler) {
+    init(animated: Binding<Bool>, buttonTitle: String, buttonSubtitle: String, sfSymbols: String, buttonColor: Color, buttonWidth: CGFloat, buttonHeight: CGFloat, handler: @escaping ChevronActionButtonCompo.ActionHandler) {
+        _animated = animated
         self.buttonTitle = buttonTitle
         self.buttonSubtitle = buttonSubtitle
         self.sfSymbols = sfSymbols
@@ -31,8 +34,8 @@ struct ChevronActionButtonCompo: View {
     
     var body: some View {
         ZStack {
-            Capsule()
-                .stroke(.black, lineWidth: 1)
+            RoundedRectangle(cornerRadius: 50)
+                .fill(buttonColor.gradient.opacity(0.99).shadow(animated ? .inner(color: .black, radius: 2, x: 2, y: 2) : .drop(color: buttonColor, radius: 2, x: 2, y: 2)))
             VStack {
                 Button(action: handler) {
                     HStack {
@@ -65,19 +68,18 @@ struct ChevronActionButtonCompo: View {
                             .scaledToFit()
                             .frame(height: 20)
                     }
+                    .contentShape(Rectangle())
                     .padding(.horizontal, 30)
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(.white)
             }
         }
-        .background(buttonColor.gradient)
         .frame(width: buttonWidth, height: buttonHeight)
-        .clipShape(Capsule())
         .shadow(color: .black, radius: 1, x: -0.5, y: -1)
     }
 }
 
 #Preview {
-    ChevronActionButtonCompo(buttonTitle: "Change Status", buttonSubtitle: "Why the hide, Jack ?", sfSymbols: "lock", buttonColor: .cyan, buttonWidth: 330, buttonHeight: 65) { }
+    ChevronActionButtonCompo(animated: .constant(false), buttonTitle: "Change Status", buttonSubtitle: "Why the hide, Jack ?", sfSymbols: "lock.fill", buttonColor: .cyan, buttonWidth: 330, buttonHeight: 65) { }
 }

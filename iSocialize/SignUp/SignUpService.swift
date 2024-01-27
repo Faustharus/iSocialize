@@ -13,6 +13,7 @@ enum SignUpKeys: String {
     case id
     case fullName
     case email
+    case profilePicture
 }
 
 protocol SignUpService {
@@ -35,7 +36,8 @@ final class SignUpServiceImpl: SignUpService {
                             db.collection("users").document(uid).setData([
                                 SignUpKeys.id.rawValue: uid,
                                 SignUpKeys.fullName.rawValue: details.fullName,
-                                SignUpKeys.email.rawValue: details.email
+                                SignUpKeys.email.rawValue: details.email,
+                                SignUpKeys.profilePicture.rawValue: "No Image"
                             ]) { error in
                                 if let error = error {
                                     promise(.failure(error))

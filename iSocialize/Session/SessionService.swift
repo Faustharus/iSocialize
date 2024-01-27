@@ -23,7 +23,7 @@ protocol SessionService {
 
 final class SessionServiceImpl: ObservableObject, SessionService {
     
-    @Published var userDetails: SessionUserDetails = .init(id: "", fullName: "", email: "")
+    @Published var userDetails: SessionUserDetails = .init(id: "", fullName: "", email: "", nickname: "", completeTagName: "", profilePicture: "")
     @Published var state: SessionState = .loggedOut
     
     private var handler: AuthStateDidChangeListenerHandle?
@@ -49,7 +49,7 @@ final class SessionServiceImpl: ObservableObject, SessionService {
             return
         }
         
-        let storageRef = Storage.storage().reference(forURL: "FIREBASE_STORAGE_URL_HERE")
+        let storageRef = Storage.storage().reference(forURL: "STORAGE_REF_HERE")
         let storageProfileRef = storageRef.child("profile").child("\(uid)")
         
         let metadata = StorageMetadata()
@@ -110,9 +110,9 @@ extension SessionServiceImpl {
                     self.userDetails.id = data["id"] as? String ?? "N/A"
                     self.userDetails.fullName = data["fullName"] as? String ?? "N/A"
                     self.userDetails.email = data["email"] as? String ?? "N/A"
-                    self.userDetails.nickname = data["nickname"] as? String ?? "N/A"
+                    self.userDetails.nickname = data["nickname"] as? String ?? ""
                     self.userDetails.completeTagName = data["completeTagName"] as? String ?? ""
-                    self.userDetails.profilePicture = data["profilePicture"] as? String ?? "N/A"
+                    self.userDetails.profilePicture = data["profilePicture"] as? String ?? ""
                 }
             }
             

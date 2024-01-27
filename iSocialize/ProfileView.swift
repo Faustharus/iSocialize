@@ -5,6 +5,8 @@
 //  Created by Damien Chailloleau on 22/01/2024.
 //
 
+import CoreImage
+import CoreImage.CIFilterBuiltins
 import FirebaseAuth
 import PhotosUI
 import SwiftUI
@@ -22,15 +24,17 @@ struct ProfileView: View {
     @State private var animationsLogout: Bool = false
     
     @State private var pickerItem: PhotosPickerItem?
-    @State private var selectedImage: Image?
+    @State private var selectedImage: Data?
     
     var body: some View {
         VStack {
             HStack {
                 VStack {
                     PhotosPicker(selection: $pickerItem, matching: .images) {
-                        if selectedImage != nil {
-                            selectedImage?
+
+                        if let selectedImage,
+                           let uiImage = UIImage(data: selectedImage) {
+                            Image(uiImage: uiImage)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 100, height: 100)
@@ -38,19 +42,19 @@ struct ProfileView: View {
                         } else {
                             AsyncImage(url: URL(string: "\(sessionService.userDetails.profilePicture ?? "")")) { phase in
                                 switch phase {
-                                case .empty:
-                                    HStack {
-                                        Spacer()
-                                        ProgressView()
-                                        Spacer()
-                                    }
+//                                case .empty:
+//                                    HStack {
+//                                        Spacer()
+//                                        ProgressView()
+//                                        Spacer()
+//                                    }
                                 case .success(let image):
                                     image
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 100)
                                         .clipShape(Circle())
-                                case .failure:
+                                case .empty, .failure:
                                     Image(systemName: "person.crop.circle")
                                         .resizable()
                                         .scaledToFit()
@@ -145,16 +149,18 @@ struct ProfileView: View {
         }, message: {
             Text("Come back quickly !")
         })
+//        .onChange(of: sessionService.userDetails.picture) { _ in loadPicture() }
         .onAppear {
             sessionService.handleRefresh(with: Auth.auth().currentUser!.uid)
         }
         .onChange(of: pickerItem) {
             Task {
-                if let loaded = try? await pickerItem?.loadTransferable(type: Image.self) {
+                if let loaded = try? await pickerItem?.loadTransferable(type: Data.self) {
                     selectedImage = loaded
                 }
             }
         }
+        
     }
 }
 
@@ -177,5 +183,9 @@ extension ProfileView {
             boolean.wrappedValue = true
         }
     }
+    
+//    func loadPicture() {
+//        selectedImage = Image(data: sessionService.userDetails.picture!)
+//    }
     
 }

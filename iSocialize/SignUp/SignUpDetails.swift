@@ -9,7 +9,7 @@ import Foundation
 
 struct SignUpDetails: Identifiable {
     var id: String = UUID().uuidString
-    var fullName: String
+    var nickname: String
     var email: String
     var password: String
     var confirmPassword: String
@@ -18,7 +18,7 @@ struct SignUpDetails: Identifiable {
 extension SignUpDetails {
     
     static var new: SignUpDetails {
-        .init(fullName: "", email: "", password: "", confirmPassword: "")
+        .init(nickname: "", email: "", password: "", confirmPassword: "")
     }
     
 }

@@ -11,8 +11,9 @@ import Firebase
 
 enum SignUpKeys: String {
     case id
-    case fullName
+    case nickname
     case email
+    case completeTagName
     case profilePicture
 }
 
@@ -35,8 +36,9 @@ final class SignUpServiceImpl: SignUpService {
                             
                             db.collection("users").document(uid).setData([
                                 SignUpKeys.id.rawValue: uid,
-                                SignUpKeys.fullName.rawValue: details.fullName,
+                                SignUpKeys.nickname.rawValue: details.nickname,
                                 SignUpKeys.email.rawValue: details.email,
+                                SignUpKeys.completeTagName.rawValue: "\(details.nickname)#\(Int.random(in: 0000..<10000))",
                                 SignUpKeys.profilePicture.rawValue: "No Image"
                             ]) { error in
                                 if let error = error {

@@ -5,11 +5,16 @@
 //  Created by Damien Chailloleau on 22/01/2024.
 //
 
-import CoreImage
-import CoreImage.CIFilterBuiltins
 import FirebaseAuth
-import PhotosUI
 import SwiftUI
+
+enum CurrentPageActive: Identifiable {
+    case updateProfile
+    
+    var id: Int {
+        hashValue
+    }
+}
 
 struct ProfileView: View {
     
@@ -18,60 +23,36 @@ struct ProfileView: View {
     @State private var isAboutToLogout: Bool = false
     
     @State private var animationsStatus: Bool = false
-    @State private var animationsNickname: Bool = false
+    @State private var animationsProfile: Bool = false
     @State private var animationsPwd: Bool = false
     @State private var animationsDelete: Bool = false
     @State private var animationsLogout: Bool = false
     
-    @State private var pickerItem: PhotosPickerItem?
-    @State private var selectedImage: Data?
+    @State private var activePage: CurrentPageActive?
     
     var body: some View {
         VStack {
             HStack {
                 VStack {
-                    PhotosPicker(selection: $pickerItem, matching: .images) {
-
-                        if let selectedImage,
-                           let uiImage = UIImage(data: selectedImage) {
-                            Image(uiImage: uiImage)
+                    AsyncImage(url: URL(string: "\(sessionService.userDetails.profilePicture ?? "")")) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 100, height: 100)
+                                .frame(maxWidth: 100, maxHeight: 100)
                                 .clipShape(Circle())
-                        } else {
-                            AsyncImage(url: URL(string: "\(sessionService.userDetails.profilePicture ?? "")")) { phase in
-                                switch phase {
-//                                case .empty:
-//                                    HStack {
-//                                        Spacer()
-//                                        ProgressView()
-//                                        Spacer()
-//                                    }
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 100)
-                                        .clipShape(Circle())
-                                case .empty, .failure:
-                                    Image(systemName: "person.crop.circle")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 100)
-                                        .foregroundStyle(.cyan.gradient)
-                                        .fontWeight(.light)
-                                    
-                                @unknown default:
-                                    fatalError()
-                                }
-                            }
+                        case .empty, .failure:
+                            Image(systemName: "person.crop.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxWidth: 100)
+                                .foregroundStyle(.cyan.gradient)
+                                .fontWeight(.light)
+                            
+                        @unknown default:
+                            fatalError()
                         }
-                    }
-                    Button {
-                        sessionService.updateProfilePicture(with: Auth.auth().currentUser!.uid, with: sessionService.userDetails)
-                    } label: {
-                        Text("Confirm Picture")
                     }
                     
                     HStack {
@@ -86,15 +67,10 @@ struct ProfileView: View {
                 Spacer()
                 
                 VStack(alignment: .leading) {
-                    if (sessionService.userDetails.nickname != "N/A") {
-                        Text(sessionService.userDetails.nickname ?? "")
-                            .font(.system(size: 36, weight: .light, design: .rounded))
-                        Text("\(sessionService.userDetails.nickname ?? "")#\(Int.random(in: 0000 ..< 10000))")
-                            .foregroundStyle(.secondary)
-                    } else {
-                        Text(sessionService.userDetails.fullName)
-                            .font(.system(size: 26, weight: .light, design: .rounded))
-                    }
+                    Text(sessionService.userDetails.nickname)
+                        .font(.system(size: 36, weight: .light, design: .rounded))
+                    Text(sessionService.userDetails.completeTagName)
+                        .foregroundStyle(.secondary)
                 }
                 .font(.headline)
             }
@@ -111,9 +87,9 @@ struct ProfileView: View {
                 }
                 .disabled(true)
                 
-                ChevronActionButtonCompo(animated: $animationsNickname, buttonTitle: "Add Nickname", buttonSubtitle: "There you go !", sfSymbols: "text.alignleft", buttonColor: .cyan, buttonWidth: 330, buttonHeight: 65) {
-                    animationButton(_animationsNickname)
-                    // TODO: Add Nickname/Pseudo
+                ChevronActionButtonCompo(animated: $animationsProfile, buttonTitle: "Update Profile", buttonSubtitle: "There you go !", sfSymbols: "person.text.rectangle", buttonColor: .cyan, buttonWidth: 330, buttonHeight: 65) {
+                    animationButton(_animationsProfile)
+                    self.activePage = .updateProfile
                 }
                 
                 ChevronActionButtonCompo(animated: $animationsPwd, buttonTitle: "New Password", buttonSubtitle: "Someone know ?", sfSymbols: "lock.shield.fill", buttonColor: .cyan, buttonWidth: 330, buttonHeight: 65) {
@@ -139,6 +115,12 @@ struct ProfileView: View {
             Spacer()
             
         }
+        .fullScreenCover(item: $activePage) { item in
+            switch item {
+            case .updateProfile:
+                UpdateProfile()
+            }
+        }
         .confirmationDialog("You're leaving so soon ?", isPresented: $isAboutToLogout, titleVisibility: .visible, actions: {
             Button(role: .destructive) {
                 sessionService.logout()
@@ -149,24 +131,17 @@ struct ProfileView: View {
         }, message: {
             Text("Come back quickly !")
         })
-//        .onChange(of: sessionService.userDetails.picture) { _ in loadPicture() }
+        .onChange(of: sessionService.userDetails.picture) { Task { loadPicture() } }
         .onAppear {
             sessionService.handleRefresh(with: Auth.auth().currentUser!.uid)
         }
-        .onChange(of: pickerItem) {
-            Task {
-                if let loaded = try? await pickerItem?.loadTransferable(type: Data.self) {
-                    selectedImage = loaded
-                }
-            }
-        }
-        
     }
 }
 
 //#Preview {
 //    NavigationStack {
 //        ProfileView()
+//            .environmentObject(SessionServiceImpl())
 //    }
 //}
 
@@ -184,8 +159,11 @@ extension ProfileView {
         }
     }
     
-//    func loadPicture() {
-//        selectedImage = Image(data: sessionService.userDetails.picture!)
-//    }
+    func loadPicture() {
+        if let pict = sessionService.userDetails.picture,
+           let uiImage = UIImage(data: pict) {
+            var _ = Image(uiImage: uiImage)
+        }
+    }
     
 }

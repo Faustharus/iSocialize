@@ -23,7 +23,7 @@ protocol SessionService {
 
 final class SessionServiceImpl: ObservableObject, SessionService {
     
-    @Published var userDetails: SessionUserDetails = .init(id: "", fullName: "", email: "", nickname: "", completeTagName: "", profilePicture: "")
+    @Published var userDetails: SessionUserDetails = .init(id: "", nickname: "", email: "", completeTagName: "", fullname: "")
     @Published var state: SessionState = .loggedOut
     
     private var handler: AuthStateDidChangeListenerHandle?
@@ -45,17 +45,13 @@ final class SessionServiceImpl: ObservableObject, SessionService {
             return
         }
         
-        guard let imageData = imageSelected.jpegData(compressionQuality: 0.2) else {
-            return
-        }
-        
-        let storageRef = Storage.storage().reference(forURL: "STORAGE_REF_HERE")
+        let storageRef = Storage.storage().reference(forURL: "STORAGE_URL_HERE")
         let storageProfileRef = storageRef.child("profile").child("\(uid)")
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         
-        storageProfileRef.putData(imageData, metadata: metadata, completion: {
+        storageProfileRef.putData(imageSelected, metadata: metadata, completion: {
             (storageMetadata, error) in
             if error != nil {
                 print("\(String(describing: error?.localizedDescription))")
@@ -108,16 +104,16 @@ extension SessionServiceImpl {
                 let data = document.data()
                 if let data = data {
                     self.userDetails.id = data["id"] as? String ?? "N/A"
-                    self.userDetails.fullName = data["fullName"] as? String ?? "N/A"
+                    self.userDetails.nickname = data["nickname"] as? String ?? "N/A"
                     self.userDetails.email = data["email"] as? String ?? "N/A"
-                    self.userDetails.nickname = data["nickname"] as? String ?? ""
                     self.userDetails.completeTagName = data["completeTagName"] as? String ?? ""
+                    self.userDetails.fullname = data["fullName"] as? String ?? ""
                     self.userDetails.profilePicture = data["profilePicture"] as? String ?? ""
                 }
             }
             
             DispatchQueue.main.async {
-                self.userDetails = SessionUserDetails(id: self.userDetails.id, fullName: self.userDetails.fullName, email: self.userDetails.email, nickname: self.userDetails.nickname ?? "", completeTagName: self.userDetails.completeTagName ?? "", profilePicture: self.userDetails.profilePicture ?? "")
+                self.userDetails = SessionUserDetails(id: self.userDetails.id, nickname: self.userDetails.nickname, email: self.userDetails.email, completeTagName: self.userDetails.completeTagName, fullname: self.userDetails.fullname ?? "", profilePicture: self.userDetails.profilePicture ?? "")
             }
         }
     }

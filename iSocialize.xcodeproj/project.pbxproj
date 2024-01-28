@@ -57,6 +57,8 @@
 		9EBBAA3A2B42D72D007C3F29 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EBBAA392B42D72D007C3F29 /* Preview Assets.xcassets */; };
 		9EC01E872B5AEDDF00E580A9 /* SecureFieldViewCompo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC01E862B5AEDDF00E580A9 /* SecureFieldViewCompo.swift */; };
 		9EEE1C9C2B5AFAFC00464C8B /* ActionButtonViewCompo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEE1C9B2B5AFAFC00464C8B /* ActionButtonViewCompo.swift */; };
+		9EF903032B668367007A0BF0 /* UpdateProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF903022B668367007A0BF0 /* UpdateProfile.swift */; };
+		9EF903052B66932E007A0BF0 /* ChevronActionNavCompo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF903042B66932E007A0BF0 /* ChevronActionNavCompo.swift */; };
 		9EFAC2952B4856940094B5BD /* SignUpDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFAC2942B4856940094B5BD /* SignUpDetails.swift */; };
 		9EFAC2972B48582F0094B5BD /* SignUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFAC2962B48582F0094B5BD /* SignUpService.swift */; };
 /* End PBXBuildFile section */
@@ -87,6 +89,8 @@
 		9EBBAA392B42D72D007C3F29 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9EC01E862B5AEDDF00E580A9 /* SecureFieldViewCompo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldViewCompo.swift; sourceTree = "<group>"; };
 		9EEE1C9B2B5AFAFC00464C8B /* ActionButtonViewCompo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonViewCompo.swift; sourceTree = "<group>"; };
+		9EF903022B668367007A0BF0 /* UpdateProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfile.swift; sourceTree = "<group>"; };
+		9EF903042B66932E007A0BF0 /* ChevronActionNavCompo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChevronActionNavCompo.swift; sourceTree = "<group>"; };
 		9EFAC2942B4856940094B5BD /* SignUpDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDetails.swift; sourceTree = "<group>"; };
 		9EFAC2962B48582F0094B5BD /* SignUpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +161,7 @@
 				9EC01E862B5AEDDF00E580A9 /* SecureFieldViewCompo.swift */,
 				9EEE1C9B2B5AFAFC00464C8B /* ActionButtonViewCompo.swift */,
 				9E0E6CE52B6021CA005BC831 /* ChevronActionButtonCompo.swift */,
+				9EF903042B66932E007A0BF0 /* ChevronActionNavCompo.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 				9EBBAA342B42D72D007C3F29 /* ContentView.swift */,
 				9E8ABF302B48790300711EE4 /* MainView.swift */,
 				9E1D434D2B5EA65E00108034 /* ProfileView.swift */,
+				9EF903022B668367007A0BF0 /* UpdateProfile.swift */,
 				9E1D434F2B5EAA5000108034 /* TalkView.swift */,
 				9E8A27BC2B5A858500407EA7 /* Components */,
 				9E98014C2B49BBC1006DF373 /* Login */,
@@ -346,8 +352,10 @@
 				9E8ABF2F2B48762700711EE4 /* SessionUserDetails.swift in Sources */,
 				9E1D43502B5EAA5000108034 /* TalkView.swift in Sources */,
 				9EBBAA352B42D72D007C3F29 /* ContentView.swift in Sources */,
+				9EF903032B668367007A0BF0 /* UpdateProfile.swift in Sources */,
 				9E2DAFB22B5C271A0051DC8A /* ForgotPasswordService.swift in Sources */,
 				9E2DAFB82B5C292E0051DC8A /* ForgotPasswordView.swift in Sources */,
+				9EF903052B66932E007A0BF0 /* ChevronActionNavCompo.swift in Sources */,
 				9E8A27BB2B5A857C00407EA7 /* TextFieldViewCompo.swift in Sources */,
 				9EBBAA332B42D72D007C3F29 /* iSocializeApp.swift in Sources */,
 				9E12D2002B486D5300685DE6 /* SignUpViewModel.swift in Sources */,

@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum FocusedSignUp: Hashable {
-    case fullname, email, password, confirmPassword
+    case nickname, email, password, confirmPassword
 }
 
 struct SignUpView: View {
@@ -163,15 +163,15 @@ extension SignUpView {
             
             Spacer().frame(minHeight: 16, maxHeight: 32)
             
-            TextFieldViewCompo(stateProperty: $registerVM.userDetails.fullName, textFieldTitle: "Full Name", textFieldPlaceholder: "Full Name")
+            TextFieldViewCompo(stateProperty: $registerVM.userDetails.nickname, textFieldTitle: "Nickname", textFieldPlaceholder: "Nickname")
                 .keyboardType(.default)
                 .autocorrectionDisabled()
-                .focused($focusedSignUp, equals: .fullname)
+                .focused($focusedSignUp, equals: .nickname)
                 .toolbar {
                     ToolbarItemGroup(placement: .keyboard) {
-                        if focusedSignUp == .fullname {
+                        if focusedSignUp == .nickname {
                             Button {
-                                self.registerVM.userDetails.fullName = ""
+                                self.registerVM.userDetails.nickname = ""
                             } label: {
                                 Text("Reset")
                             }
@@ -214,7 +214,7 @@ extension SignUpView {
     }
     
     private func canSignIn() -> Bool {
-        registerVM.userDetails.fullName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.confirmPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        registerVM.userDetails.nickname.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || registerVM.userDetails.confirmPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
     private func animationButton(_ boolean: State<Bool>) {

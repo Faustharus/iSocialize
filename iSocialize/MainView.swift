@@ -32,6 +32,7 @@ struct MainView: View {
             
             NavigationStack {
                 ProfileView()
+                    .environmentObject(SessionServiceImpl())
             }
             .tabItem {
                 Label("Profile", systemImage: "person")

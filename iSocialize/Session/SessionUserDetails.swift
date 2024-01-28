@@ -9,10 +9,10 @@ import SwiftUI
 
 struct SessionUserDetails: Identifiable, Hashable {
     var id: String
-    var fullName: String
+    var nickname: String
     var email: String
-    var nickname: String?
-    var completeTagName: String?
-    var picture: UIImage?
+    var completeTagName: String
+    var fullname: String?
+    var picture: Data?
     var profilePicture: String?
 }

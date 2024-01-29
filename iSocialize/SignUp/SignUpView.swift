@@ -146,7 +146,7 @@ extension SignUpView {
     private var emailAndName: some View {
         VStack {
             TextFieldViewCompo(stateProperty: $registerVM.userDetails.email, textFieldTitle: "Email", textFieldPlaceholder: "Email")
-                .keyboardType(.default)
+                .keyboardType(.emailAddress)
                 .autocorrectionDisabled()
                 .focused($focusedSignUp, equals: .email)
                 .toolbar {

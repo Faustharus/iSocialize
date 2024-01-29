@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import Firebase
+import FirebaseAuth
 import FirebaseStorage
 
 enum SessionState {
@@ -45,7 +46,7 @@ final class SessionServiceImpl: ObservableObject, SessionService {
             return
         }
         
-        let storageRef = Storage.storage().reference(forURL: "STORAGE_URL_HERE")
+        let storageRef = Storage.storage().reference(forURL: "STORAGE_REF_HERE")
         let storageProfileRef = storageRef.child("profile").child("\(uid)")
         
         let metadata = StorageMetadata()
@@ -74,6 +75,27 @@ final class SessionServiceImpl: ObservableObject, SessionService {
                 }
             }
         })
+    }
+    
+    func deleteAccount(with uid: String, and password: String) {
+        guard let user = Auth.auth().currentUser else { return }
+        let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password)
+        
+        let dbRef = db.collection("users").document(uid)
+        let profilePictureRef = Storage.storage().reference().child("profile").child("\(uid)")
+        dbRef.getDocument { (snapshot, error) in
+            if snapshot != nil {
+                Task {
+                    do {
+                        try await profilePictureRef.delete()
+                        try await self.db.collection("users").document(uid).delete()
+                        try await user.delete()
+                    } catch {
+                        print("Had not been able to delete the account")
+                    }
+                }
+            }
+        }
     }
     
 }

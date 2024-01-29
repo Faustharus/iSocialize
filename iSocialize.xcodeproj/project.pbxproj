@@ -14,6 +14,7 @@
 		9E2DAFB22B5C271A0051DC8A /* ForgotPasswordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2DAFB12B5C271A0051DC8A /* ForgotPasswordService.swift */; };
 		9E2DAFB62B5C281C0051DC8A /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2DAFB52B5C281C0051DC8A /* ForgotPasswordViewModel.swift */; };
 		9E2DAFB82B5C292E0051DC8A /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2DAFB72B5C292E0051DC8A /* ForgotPasswordView.swift */; };
+		9E5E58FF2B67E80800D318D7 /* DeleteProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E58FE2B67E80800D318D7 /* DeleteProfile.swift */; };
 		9E8A27BB2B5A857C00407EA7 /* TextFieldViewCompo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8A27BA2B5A857C00407EA7 /* TextFieldViewCompo.swift */; };
 		9E8ABF2D2B4874E300711EE4 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABF2C2B4874E300711EE4 /* SessionService.swift */; };
 		9E8ABF2F2B48762700711EE4 /* SessionUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABF2E2B48762700711EE4 /* SessionUserDetails.swift */; };
@@ -72,6 +73,7 @@
 		9E2DAFB12B5C271A0051DC8A /* ForgotPasswordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordService.swift; sourceTree = "<group>"; };
 		9E2DAFB52B5C281C0051DC8A /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		9E2DAFB72B5C292E0051DC8A /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		9E5E58FE2B67E80800D318D7 /* DeleteProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProfile.swift; sourceTree = "<group>"; };
 		9E8A27BA2B5A857C00407EA7 /* TextFieldViewCompo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldViewCompo.swift; sourceTree = "<group>"; };
 		9E8ABF2C2B4874E300711EE4 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		9E8ABF2E2B48762700711EE4 /* SessionUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionUserDetails.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				9E8ABF302B48790300711EE4 /* MainView.swift */,
 				9E1D434D2B5EA65E00108034 /* ProfileView.swift */,
 				9EF903022B668367007A0BF0 /* UpdateProfile.swift */,
+				9E5E58FE2B67E80800D318D7 /* DeleteProfile.swift */,
 				9E1D434F2B5EAA5000108034 /* TalkView.swift */,
 				9E8A27BC2B5A858500407EA7 /* Components */,
 				9E98014C2B49BBC1006DF373 /* Login */,
@@ -348,6 +351,7 @@
 				9E9801502B49BDB6006DF373 /* LoginService.swift in Sources */,
 				9EEE1C9C2B5AFAFC00464C8B /* ActionButtonViewCompo.swift in Sources */,
 				9E9801522B49BE6D006DF373 /* LoginViewModel.swift in Sources */,
+				9E5E58FF2B67E80800D318D7 /* DeleteProfile.swift in Sources */,
 				9E1D434E2B5EA65E00108034 /* ProfileView.swift in Sources */,
 				9E8ABF2F2B48762700711EE4 /* SessionUserDetails.swift in Sources */,
 				9E1D43502B5EAA5000108034 /* TalkView.swift in Sources */,

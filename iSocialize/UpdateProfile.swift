@@ -83,6 +83,7 @@ struct UpdateProfile: View {
             }
             .buttonStyle(.bordered)
         }
+        .interactiveDismissDisabled(true)
 //        .onAppear {
 //            sessionService.handleRefresh(with: Auth.auth().currentUser!.uid)
 //        }

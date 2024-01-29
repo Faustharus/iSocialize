@@ -9,7 +9,7 @@ import FirebaseAuth
 import SwiftUI
 
 enum CurrentPageActive: Identifiable {
-    case updateProfile
+    case updateProfile, deleteProfile
     
     var id: Int {
         hashValue
@@ -100,9 +100,8 @@ struct ProfileView: View {
                 
                 ChevronActionButtonCompo(animated: $animationsDelete, buttonTitle: "Delete Account", buttonSubtitle: "Why qutting ?", sfSymbols: "trash.fill", buttonColor: .cyan, buttonWidth: 330, buttonHeight: 65) {
                     animationButton(_animationsDelete)
-                    // TODO: Delete the Account
+                    self.activePage = .deleteProfile
                 }
-                .disabled(true)
                 
                 ChevronActionButtonCompo(animated: $animationsLogout, buttonTitle: "Logging out", buttonSubtitle: "See ya later !", sfSymbols: "power.circle.fill", buttonColor: .cyan, buttonWidth: 330, buttonHeight: 65) {
                     animationButton(_animationsLogout)
@@ -115,10 +114,13 @@ struct ProfileView: View {
             Spacer()
             
         }
-        .fullScreenCover(item: $activePage) { item in
+        .sheet(item: $activePage) { item in
             switch item {
             case .updateProfile:
                 UpdateProfile()
+            case .deleteProfile:
+                DeleteProfile()
+                    .presentationDetents([.fraction(0.5)])
             }
         }
         .confirmationDialog("You're leaving so soon ?", isPresented: $isAboutToLogout, titleVisibility: .visible, actions: {

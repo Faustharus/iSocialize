@@ -32,7 +32,9 @@ struct UpdateProfile: View {
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(.black, lineWidth: 1.5)
                     VStack {
-                        ContentUnavailableView("No Picture", systemImage: "xmark")
+                        PhotosPicker(selection: $pickerItem, matching: .images) {
+                            ContentUnavailableView("Add Picture", systemImage: "photo.badge.plus")
+                        }
                     }
                 }
                 .frame(maxWidth: 300, maxHeight: 200)
@@ -40,14 +42,9 @@ struct UpdateProfile: View {
                 .padding()
             }
             
-            PhotosPicker(selection: $pickerItem, matching: .images) {
-                Label("Add Photo", systemImage: "photo")
-            }
-            .buttonStyle(.borderedProminent)
+//            Spacer()
             
-            Spacer()
-            
-            VStack {
+            HStack {
                 //if sessionService.userDetails.picture != nil || pickerItem != nil {
                     Button {
                         sessionService.updateProfilePicture(with: Auth.auth().currentUser!.uid, with: sessionService.userDetails)
@@ -72,6 +69,34 @@ struct UpdateProfile: View {
                     .disabled(sessionService.userDetails.picture == nil || pickerItem == nil)
                 //}
             }
+            
+            VStack(alignment: .leading, spacing: 0) {
+                Text("Full Name")
+                    .font(.title)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(.black, lineWidth: 1.5)
+                    VStack {
+                        TextField("Full Name", text: $sessionService.userDetails.fullname.toUnwrapped(defaultValue: ""))
+                            .padding(.horizontal, 10)
+                            .keyboardType(.default)
+                            .autocorrectionDisabled()
+                    }
+                }
+                .frame(width: 300, height: 55)
+                
+                
+                Button {
+                    // TODO: Add Full Name into Profile
+                } label: {
+                    Text("Confirm Name")
+                }
+                .disabled(sessionService.userDetails.fullname?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty != nil)
+                .buttonStyle(.borderedProminent)
+                .padding(.horizontal, 0)
+                .padding(.vertical, 20)
+            }
+            .padding(.vertical, 20)
             
             Spacer()
             

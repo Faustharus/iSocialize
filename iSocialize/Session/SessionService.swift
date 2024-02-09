@@ -46,7 +46,7 @@ final class SessionServiceImpl: ObservableObject, SessionService {
             return
         }
         
-        let storageRef = Storage.storage().reference(forURL: "STORAGE_REF_HERE")
+        let storageRef = Storage.storage().reference(forURL: "STORAGE_LINK_HERE")
         let storageProfileRef = storageRef.child("profile").child("\(uid)")
         
         let metadata = StorageMetadata()
